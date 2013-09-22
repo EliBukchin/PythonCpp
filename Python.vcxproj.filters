@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="ClassWrapper.h" />
+    <ClInclude Include="Conversions.h" />
+    <ClInclude Include="CppMethodWrapper.h" />
+    <ClInclude Include="PythonCpp.h" />
+    <ClInclude Include="PythonModule.h" />
+    <ClInclude Include="NativeString.h" />
+    <ClInclude Include="Config.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Implementation.cpp" />
+  </ItemGroup>
+</Project>
