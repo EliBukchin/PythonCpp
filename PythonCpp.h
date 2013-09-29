@@ -34,9 +34,9 @@ struct StripPointer<T*>
 	typedef typename StripPointer<T>::type type;
 };
 
-#define ADD_CLASS_TO_PYTHON( Class ) \
-	static	PythonCpp::ClassWrapper<Class>* Class##_pPythonCppClass_AUTOGEN = PythonCpp::Module::CreateClass<Class>( #Class ); \
-	void	PythonCpp::ClassWrapper<Class>::AddClassDescription()
+#define ADD_CLASS_TO_PYTHON( Namespace, Class ) \
+	static	PythonCpp::ClassWrapper<Namespace::Class>* Class##_pPythonCppClass_AUTOGEN = PythonCpp::Module::CreateClass<Namespace::Class>( #Class ); \
+	void	PythonCpp::ClassWrapper<Namespace::Class>::AddClassDescription()
 
 #define SET_PARENT( Parent ) \
 	SetParent<Parent>()
