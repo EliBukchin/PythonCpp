@@ -76,7 +76,7 @@ namespace PythonCpp
 		// Override
 		virtual bool	Register( PyObject* pyModule );
 
-		void	AddClassDescription();
+		INLINE void	AddClassDescription();
 
 		// A structure to hold metadata on a method
 		struct MethodDesc

@@ -36,6 +36,7 @@ struct StripPointer<T*>
 
 #define ADD_CLASS_TO_PYTHON( Namespace, Class ) \
 	static	PythonCpp::ClassWrapper<Namespace::Class>* Class##_pPythonCppClass_AUTOGEN = PythonCpp::Module::CreateClass<Namespace::Class>( #Class ); \
+	template<> \
 	void	PythonCpp::ClassWrapper<Namespace::Class>::AddClassDescription()
 
 #define SET_PARENT( Parent ) \
@@ -53,8 +54,8 @@ struct StripPointer<T*>
 #define EXPORT_STATIC_METHOD_DESC( Method, description ) \
 	AddStaticMethod<__COUNTER__>( #Method, description, &StripPointer<decltype(this)>::type::wrapped_class_type::Method )
 
-#define PYTHON_ADD_METHOD_OVERLOADED( Class, method, ReturnType, ... ) \
-	AddMethod<__COUNTER__>( #method, nullptr, static_cast<ReturnType (Class::*)(__VA_ARGS__)>(&StripPointer<decltype(this)>::type::wrapped_class_type::Method) );
+#define PYTHON_ADD_METHOD_OVERLOADED( Method, ReturnType, ... ) \
+	AddMethod<__COUNTER__>( #Method, nullptr, static_cast<ReturnType (StripPointer<decltype(this)>::type::wrapped_class_type::*)(__VA_ARGS__)>(&StripPointer<decltype(this)>::type::wrapped_class_type::Method) );
 
-#define PYTHON_ADD_METHOD_OVERLOADED_DESC( Class, method, desc, ReturnType, ... ) \
-	AddMethod<__COUNTER__>( #method, desc, static_cast<ReturnType (Class::*)(__VA_ARGS__)>(&StripPointer<decltype(this)>::type::wrapped_class_type::Method) );
+#define PYTHON_ADD_METHOD_OVERLOADED_DESC( Method, desc, ReturnType, ... ) \
+	AddMethod<__COUNTER__>( #Method, desc, static_cast<ReturnType (StripPointer<decltype(this)>::type::wrapped_class_type::*)(__VA_ARGS__)>(&StripPointer<decltype(this)>::type::wrapped_class_type::Method) );
