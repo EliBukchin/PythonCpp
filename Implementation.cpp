@@ -320,3 +320,18 @@ bool PythonCpp::EvalExpression( const char* strExpression )
 	return true;
 }
 
+PythonCpp::ClassWrapperBase::ClassWrapperBase( const char* strName ) : m_pNext( nullptr )
+{
+	m_strName = new char[ strlen(strName) + 1];
+	strcpy_s( m_strName, strlen(strName) + 1, strName );
+	m_strName[strlen(strName)] = 0;
+}
+
+PythonCpp::ClassWrapperBase::~ClassWrapperBase()
+{
+	if ( m_strName )
+	{
+		delete[] m_strName;
+		m_strName = nullptr;
+	}
+}

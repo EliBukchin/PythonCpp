@@ -25,9 +25,24 @@ namespace PythonCpp
 		template< class T >
 		static ClassWrapper<T>*		CreateClass( const char* strClassName )
 		{
-			ClassWrapper<T>*	pClass = new ClassWrapper<T>( strClassName );
-			pClass->m_pNext = s_listClasses;
-			s_listClasses = static_cast<ClassWrapperBase*>( pClass );
+			// Prevent duplicates
+			ClassWrapper<T>*	pClass = nullptr;
+			ClassWrapperBase* pIter = s_listClasses;
+			while( pIter != nullptr )
+			{
+				if ( strcmp(pIter->GetName(), strClassName) == 0 )
+				{
+					pClass = static_cast<ClassWrapper<T>*>(pIter);
+				}
+				pIter = pIter->m_pNext;
+			}
+
+			if ( pClass == nullptr )
+			{
+				pClass = new ClassWrapper<T>( strClassName );
+				pClass->m_pNext = s_listClasses;
+				s_listClasses = static_cast<ClassWrapperBase*>( pClass );
+			}						
 			return pClass;
 		}
 

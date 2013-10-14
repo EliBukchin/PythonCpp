@@ -18,8 +18,9 @@ namespace PythonCpp
 	{
 		friend class Module;
 	public:		
-		virtual ~ClassWrapperBase() {}
+		virtual ~ClassWrapperBase();
 		virtual PyTypeObject*	GetType() { return nullptr; }
+		const char* GetName() const { return m_strName; }
 
 		ClassWrapperBase*		m_pNext;
 
@@ -27,7 +28,10 @@ namespace PythonCpp
 		virtual bool Register( PyObject* pyModule ) { (pyModule); return false; }
 
 	protected:
-		ClassWrapperBase() : m_pNext( nullptr ) {}
+		ClassWrapperBase( const char* strName );
+
+	private:
+		char* m_strName;
 	};
 
 	// template class wrapper class
@@ -115,9 +119,6 @@ namespace PythonCpp
 			}
 		};
 
-		// name of the class in python
-		char*			m_strName;
-
 		// method definitions for python
 		PyMethodDef*	m_arrPyMethodDefs;
 
@@ -138,16 +139,12 @@ namespace PythonCpp
 	}
 
 	template< class CppClass >
-	PythonCpp::ClassWrapper<CppClass>::ClassWrapper( const char* strName ) : ClassWrapperBase(),
+	PythonCpp::ClassWrapper<CppClass>::ClassWrapper( const char* strName ) : ClassWrapperBase( strName ),
 		m_arrPyMethodDefs( nullptr ),
 		m_listMethods( nullptr ),
 		m_uiNumMethods( 0 )
 	{
-		ClassInstance<CppClass*>::s_pyTypeObject = g_pyDefualtType;
-
-		m_strName = new char[ strlen(strName) + 1];
-		strcpy_s( m_strName, strlen(strName) + 1, strName );
-		m_strName[strlen(strName)] = 0;
+		ClassInstance<CppClass*>::s_pyTypeObject = g_pyDefualtType;		
 	}
 
 	template< class CppClass >
@@ -179,13 +176,7 @@ namespace PythonCpp
 			MethodDesc* pNewHead = m_listMethods->m_pNext;
 			delete m_listMethods;
 			m_listMethods = pNewHead;
-		}
-
-		if ( m_strName )
-		{
-			delete[] m_strName;
-			m_strName = nullptr;
-		}
+		}		
 	}
 
 	template< class CppClass >
@@ -263,7 +254,7 @@ namespace PythonCpp
 
 		// Update Class definition
 		PyTypeObject* pPyTypeObject = &(ClassInstance<CppClass*>::s_pyTypeObject);
-		pPyTypeObject->tp_name = m_strName;
+		pPyTypeObject->tp_name = GetName();
 		pPyTypeObject->tp_basicsize = sizeof(ClassInstance<CppClass*>);
 		pPyTypeObject->tp_doc = "Embedded C++ class";
 		pPyTypeObject->tp_methods = m_arrPyMethodDefs;
@@ -274,7 +265,7 @@ namespace PythonCpp
 		if ( res == 0 )
 		{
 			Py_INCREF( pPyTypeObject );
-			res = PyModule_AddObject( pyModule, m_strName, reinterpret_cast<PyObject*>( pPyTypeObject ) );
+			res = PyModule_AddObject( pyModule, GetName(), reinterpret_cast<PyObject*>( pPyTypeObject ) );
 		}
 		else
 		{

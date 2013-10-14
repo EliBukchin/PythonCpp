@@ -35,7 +35,7 @@ struct StripPointer<T*>
 };
 
 #define ADD_CLASS_TO_PYTHON( Namespace, Class ) \
-	static	PythonCpp::ClassWrapper<Namespace::Class>* Class##_pPythonCppClass_AUTOGEN = PythonCpp::Module::CreateClass<Namespace::Class>( #Class ); \
+	const static PythonCpp::ClassWrapper<Namespace::Class>* Class##_pPythonCppClass_AUTOGEN = PythonCpp::Module::CreateClass<Namespace::Class>( #Class ); \
 	template<> \
 	void	PythonCpp::ClassWrapper<Namespace::Class>::AddClassDescription()
 
