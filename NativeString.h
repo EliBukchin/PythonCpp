@@ -23,13 +23,13 @@ namespace PythonCpp
 	// Specialization of conversion functions for native string type
 
 	/** PyObject -> String */
-	template<>	static PYTHON_CPP_NATIVE_STRING			FromPy( PyObject* o )
+	template<>	static PYTHON_CPP_NATIVE_STRING			FromPy<PYTHON_CPP_NATIVE_STRING>( PyObject* o )
 	{
 		return CharToNativeString( PYBYTES_AS_STRING( o ) );
 	}
 
 	/** PyObject -> const String */
-	template<>	static const PYTHON_CPP_NATIVE_STRING			FromPy( PyObject* o )
+	template<>	static const PYTHON_CPP_NATIVE_STRING			FromPy<const PYTHON_CPP_NATIVE_STRING>( PyObject* o )
 	{
 		return CharToNativeString( PYBYTES_AS_STRING( o ) );
 	}
@@ -42,7 +42,7 @@ namespace PythonCpp
 	static PYTHON_CPP_NATIVE_STRING		g_arrTempNativeStrings[PYTHON_CPP_MAX_METHOD_STRINGS];
 
 	/** PyObject -> String& :::::   Thinking about not supporting it as changes done to the string will not propagete */
-	template<>	static PYTHON_CPP_NATIVE_STRING&			FromPy( PyObject* o )
+	template<>	static PYTHON_CPP_NATIVE_STRING&			FromPy<PYTHON_CPP_NATIVE_STRING&>( PyObject* o )
 	{
 		g_arrTempNativeStrings[g_uiNumberOfTempNativeStrings] = CharToNativeString( PYBYTES_AS_STRING( o ) );
 		++g_uiNumberOfTempNativeStrings;
@@ -50,7 +50,7 @@ namespace PythonCpp
 	}
 
 	/** PyObject -> const String& */
-	template<>	static const PYTHON_CPP_NATIVE_STRING&			FromPy( PyObject* o )
+	template<>	static const PYTHON_CPP_NATIVE_STRING&			FromPy<const PYTHON_CPP_NATIVE_STRING&>( PyObject* o )
 	{
 		g_arrTempNativeStrings[g_uiNumberOfTempNativeStrings] = CharToNativeString( PYBYTES_AS_STRING( o ) );
 		++g_uiNumberOfTempNativeStrings;
