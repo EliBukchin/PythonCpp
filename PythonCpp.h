@@ -7,6 +7,8 @@
 */
 
 #pragma once
+#ifndef IGNORE_PYTHON_CPP
+
 #include "PythonModule.h"
 
 namespace PythonCpp
@@ -59,3 +61,15 @@ struct StripPointer<T*>
 
 #define PYTHON_ADD_METHOD_OVERLOADED_DESC( Method, desc, ReturnType, ... ) \
 	AddMethod<__COUNTER__>( #Method, desc, static_cast<ReturnType (StripPointer<decltype(this)>::type::wrapped_class_type::*)(__VA_ARGS__)>(&StripPointer<decltype(this)>::type::wrapped_class_type::Method) );
+
+#else
+
+#define ADD_CLASS_TO_PYTHON( Namespace, Class ) namespace __PythonCPPPlaceHolderNamespace
+#define SET_PARENT( Parent )
+#define EXPORT_METHOD( Method )
+#define EXPORT_METHOD_DESC( Method, description )
+#define EXPORT_STATIC_METHOD( Method )
+#define EXPORT_STATIC_METHOD_DESC( Method, description )
+#define PYTHON_ADD_METHOD_OVERLOADED( Method, ReturnType, ... )
+#define PYTHON_ADD_METHOD_OVERLOADED_DESC( Method, desc, ReturnType, ... )
+#endif
