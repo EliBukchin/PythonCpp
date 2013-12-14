@@ -44,7 +44,14 @@ namespace PythonCpp
 	/** PyObject -> String& :::::   Thinking about not supporting it as changes done to the string will not propagete */
 	template<>	static PYTHON_CPP_NATIVE_STRING&			FromPy<PYTHON_CPP_NATIVE_STRING&>( PyObject* o )
 	{
-		g_arrTempNativeStrings[g_uiNumberOfTempNativeStrings] = CharToNativeString( PYBYTES_AS_STRING( o ) );
+		if ( o )
+		{
+			g_arrTempNativeStrings[ g_uiNumberOfTempNativeStrings ] = CharToNativeString( PYBYTES_AS_STRING( o ) );
+		}
+		else
+		{
+			g_arrTempNativeStrings[ g_uiNumberOfTempNativeStrings ] = PYTHON_CPP_NATIVE_STRING( "null" );
+		}
 		++g_uiNumberOfTempNativeStrings;
 		return g_arrTempNativeStrings[g_uiNumberOfTempNativeStrings-1];
 	}
@@ -52,7 +59,14 @@ namespace PythonCpp
 	/** PyObject -> const String& */
 	template<>	static const PYTHON_CPP_NATIVE_STRING&			FromPy<const PYTHON_CPP_NATIVE_STRING&>( PyObject* o )
 	{
-		g_arrTempNativeStrings[g_uiNumberOfTempNativeStrings] = CharToNativeString( PYBYTES_AS_STRING( o ) );
+		if ( o )
+		{
+			g_arrTempNativeStrings[ g_uiNumberOfTempNativeStrings ] = CharToNativeString( PYBYTES_AS_STRING( o ) );
+		}
+		else
+		{
+			g_arrTempNativeStrings[ g_uiNumberOfTempNativeStrings ] = PYTHON_CPP_NATIVE_STRING( "null" );
+		}		
 		++g_uiNumberOfTempNativeStrings;
 		return g_arrTempNativeStrings[g_uiNumberOfTempNativeStrings-1];
 	}
