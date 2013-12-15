@@ -32,6 +32,9 @@ namespace PythonCpp
 		static	PyTypeObject	s_pyTypeObject;
 
 		ClassInstance() : m_pInstance( nullptr ) {}
+
+		// remove assignment operator
+		ClassInstance&	operator=( const ClassInstance& rhs );
 	};
 
 	// Template implementation
