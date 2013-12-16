@@ -89,7 +89,7 @@ namespace PythonCpp
 
 	// Converter functions to PyObject
 	template< typename T >
-	static PyObject*	ToPy( T o )
+	static PyObject*	ToPy( typename std::enable_if<!std::is_enum<T>::value, T>::type o )
 	{
 		ClassInstance< primitive_type<T>::type >* pNew = PyObject_NEW( ClassInstance< primitive_type<T>::type >, &(ClassInstance< primitive_type<T>::type >::s_pyTypeObject) );
 		if ( pNew )
@@ -100,35 +100,41 @@ namespace PythonCpp
 		Py_RETURN_NONE;
 	}
 
+	// In case of enum
+	template< typename T >
+	static PyObject*	ToPy( typename std::enable_if<std::is_enum<T>::value, T>::type o )
+	{
+		return PyLong_FromLong( static_cast<unsigned int>( o ) );
+	}
 
 	// Some specialization for primitives
-	template<>	static PyObject*	ToPy( long o ) { return PyLong_FromLong(o); }
-	template<>	static PyObject*	ToPy( int o ) { return PyLong_FromLong( static_cast<long>(o) ); }
-	template<>	static PyObject*	ToPy( unsigned int o ) { return PyLong_FromLong( static_cast<long>(o) ); }
-	template<>	static PyObject*	ToPy( short o ) { return PyLong_FromLong( static_cast<long>(o) ); }
-	template<>	static PyObject*	ToPy( bool o ) { return PyBool_FromLong( static_cast<long>(o?1:0) ); }
-	template<>	static PyObject*	ToPy( double o ) { return PyFloat_FromDouble(o); }
-	template<>	static PyObject*	ToPy( float o ) { return PyFloat_FromDouble( static_cast<double>(o) ); }
-	template<>	static PyObject*	ToPy( char* o ) { return PyBytes_FromString(o); }
+	template<>	static PyObject*	ToPy<long>( long o ) { return PyLong_FromLong(o); }
+	template<>	static PyObject*	ToPy<int>( int o ) { return PyLong_FromLong( static_cast<long>(o) ); }
+	template<>	static PyObject*	ToPy<unsigned int>( unsigned int o ) { return PyLong_FromLong( static_cast<long>(o) ); }
+	template<>	static PyObject*	ToPy<short>( short o ) { return PyLong_FromLong( static_cast<long>(o) ); }
+	template<>	static PyObject*	ToPy<bool>( bool o ) { return PyBool_FromLong( static_cast<long>(o?1:0) ); }
+	template<>	static PyObject*	ToPy<double>( double o ) { return PyFloat_FromDouble(o); }
+	template<>	static PyObject*	ToPy<float>( float o ) { return PyFloat_FromDouble( static_cast<double>(o) ); }
+	template<>	static PyObject*	ToPy<char*>( char* o ) { return PyBytes_FromString(o); }
 
-	template<>	static PyObject*	ToPy( long&& o ) { return PyLong_FromLong(o); }
-	template<>	static PyObject*	ToPy( int&& o ) { return PyLong_FromLong( static_cast<long>(o) ); }
-	template<>	static PyObject*	ToPy( unsigned int&& o ) { return PyLong_FromLong( static_cast<long>(o) ); }
-	template<>	static PyObject*	ToPy( short&& o ) { return PyLong_FromLong( static_cast<long>(o) ); }
-	template<>	static PyObject*	ToPy( bool&& o ) { return PyBool_FromLong( static_cast<long>(o?1:0) ); }
-	template<>	static PyObject*	ToPy( double&& o ) { return PyFloat_FromDouble(o); }
-	template<>	static PyObject*	ToPy( float&& o ) { return PyFloat_FromDouble( static_cast<double>(o) ); }
-	template<>	static PyObject*	ToPy( char*&& o ) { return PyBytes_FromString(o); }
+	template<>	static PyObject*	ToPy<long&&>( long&& o ) { return PyLong_FromLong(o); }
+	template<>	static PyObject*	ToPy<int&&>( int&& o ) { return PyLong_FromLong( static_cast<long>(o) ); }
+	template<>	static PyObject*	ToPy<unsigned int&&>( unsigned int&& o ) { return PyLong_FromLong( static_cast<long>(o) ); }
+	template<>	static PyObject*	ToPy<short&&>( short&& o ) { return PyLong_FromLong( static_cast<long>(o) ); }
+	template<>	static PyObject*	ToPy<bool&&>( bool&& o ) { return PyBool_FromLong( static_cast<long>(o?1:0) ); }
+	template<>	static PyObject*	ToPy<double&&>( double&& o ) { return PyFloat_FromDouble(o); }
+	template<>	static PyObject*	ToPy<float&&>( float&& o ) { return PyFloat_FromDouble( static_cast<double>(o) ); }
+	template<>	static PyObject*	ToPy<char*&&>( char*&& o ) { return PyBytes_FromString(o); }
 	
 
-	template<>	static PyObject*	ToPy( long& o ) { return PyLong_FromLong(o); }
-	template<>	static PyObject*	ToPy( int& o ) { return PyLong_FromLong( static_cast<long>(o) ); }
-	template<>	static PyObject*	ToPy( unsigned int& o ) { return PyLong_FromLong( static_cast<long>(o) ); }
-	template<>	static PyObject*	ToPy( short& o ) { return PyLong_FromLong( static_cast<long>(o) ); }
-	template<>	static PyObject*	ToPy( bool& o ) { return PyBool_FromLong( static_cast<long>(o?1:0) ); }
-	template<>	static PyObject*	ToPy( double& o ) { return PyFloat_FromDouble(o); }
-	template<>	static PyObject*	ToPy( float& o ) { return PyFloat_FromDouble( static_cast<double>(o) ); }
-	template<>	static PyObject*	ToPy( char*& o ) { return PyBytes_FromString(o); }
+	template<>	static PyObject*	ToPy<long&>( long& o ) { return PyLong_FromLong(o); }
+	template<>	static PyObject*	ToPy<int&>( int& o ) { return PyLong_FromLong( static_cast<long>(o) ); }
+	template<>	static PyObject*	ToPy<unsigned int&>( unsigned int& o ) { return PyLong_FromLong( static_cast<long>(o) ); }
+	template<>	static PyObject*	ToPy<short&>( short& o ) { return PyLong_FromLong( static_cast<long>(o) ); }
+	template<>	static PyObject*	ToPy<bool&>( bool& o ) { return PyBool_FromLong( static_cast<long>(o?1:0) ); }
+	template<>	static PyObject*	ToPy<double&>( double& o ) { return PyFloat_FromDouble(o); }
+	template<>	static PyObject*	ToPy<float&>( float& o ) { return PyFloat_FromDouble( static_cast<double>(o) ); }
+	template<>	static PyObject*	ToPy<char*&>( char*& o ) { return PyBytes_FromString(o); }
 
 	// if you want to compile /w4 /wx you must set this flag, as not all conversions functions will be in use
 	#pragma warning( disable : 4505 )

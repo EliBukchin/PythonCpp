@@ -72,7 +72,7 @@ namespace PythonCpp
 	}
 
 	/** RValue String -> PyObject */
-	template<>	static PyObject*	ToPy( PYTHON_CPP_NATIVE_STRING&& o )
+	template<>	static PyObject*	ToPy<PYTHON_CPP_NATIVE_STRING&&>( PYTHON_CPP_NATIVE_STRING&& o )
 	{
 		const char* str = NativeStringToChar( o );
 		PyObject* res = PyBytes_FromString( str );
@@ -83,7 +83,7 @@ namespace PythonCpp
 	}
 
 	/** const RValue String -> PyObject */
-	template<>	static PyObject*	ToPy( const PYTHON_CPP_NATIVE_STRING&& o )
+	template<>	static PyObject*	ToPy<const PYTHON_CPP_NATIVE_STRING&&>( const PYTHON_CPP_NATIVE_STRING&& o )
 	{
 		const char* str = NativeStringToChar( o );
 		PyObject* res = PyBytes_FromString( str );
@@ -94,7 +94,7 @@ namespace PythonCpp
 	}
 
 	/** String Reference -> PyObject */
-	template<>	static PyObject*	ToPy( PYTHON_CPP_NATIVE_STRING& o )
+	template<>	static PyObject*	ToPy<PYTHON_CPP_NATIVE_STRING&>( PYTHON_CPP_NATIVE_STRING& o )
 	{
 		const char* str = NativeStringToChar( o );
 		PyObject* res = PyBytes_FromString( str );
@@ -105,7 +105,7 @@ namespace PythonCpp
 	}
 
 	/** const String Reference -> PyObject */
-	template<>	static PyObject*	ToPy( const PYTHON_CPP_NATIVE_STRING& o )
+	template<>	static PyObject*	ToPy<const PYTHON_CPP_NATIVE_STRING&>( const PYTHON_CPP_NATIVE_STRING& o )
 	{
 		const char* str = NativeStringToChar( o );
 		PyObject* res = PyBytes_FromString( str );
