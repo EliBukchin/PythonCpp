@@ -40,8 +40,21 @@ namespace PythonCpp
 			if ( pClass == nullptr )
 			{
 				pClass = new ClassWrapper<T>( strClassName );
-				pClass->m_pNext = s_listClasses;
-				s_listClasses = static_cast<ClassWrapperBase*>( pClass );
+				pClass->m_pNext = nullptr;
+
+				ClassWrapperBase* pList = s_listClasses;
+				if ( pList == nullptr )
+				{
+					s_listClasses = static_cast<ClassWrapperBase*>( pClass );
+				}
+				else
+				{
+					while ( pList->m_pNext )
+					{
+						pList = pList->m_pNext;
+					}
+					pList->m_pNext = static_cast<ClassWrapperBase*>( pClass );
+				}
 			}						
 			return pClass;
 		}

@@ -135,7 +135,7 @@ namespace PythonCpp
 	template< class Parent >
 	void PythonCpp::ClassWrapper<CppClass>::SetParent()
 	{
-		ClassInstance<CppClass*>::s_pyTypeObject.tp_base = &(ClassInstance<Parent>::s_pyTypeObject);
+		ClassInstance<CppClass*>::s_pyTypeObject.tp_base = &(ClassInstance<Parent*>::s_pyTypeObject);
 	}
 
 	template< class CppClass >
