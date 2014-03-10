@@ -12,4 +12,7 @@
   <ItemGroup>
     <ClCompile Include="Implementation.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="PythonCpp.licenseheader" />
+  </ItemGroup>
 </Project>
