@@ -29,17 +29,17 @@
 
 namespace PythonCpp
 {
-	// Convert char array to native String < IMPLEMENT IN YOUR CODE >
-	PYTHON_CPP_NATIVE_STRING	CharToNativeString( const char* strIn );
+	// Convert int8_t array to native String < IMPLEMENT IN YOUR CODE >
+	PYTHON_CPP_NATIVE_STRING	CharToNativeString( const int8_t* strIn );
 
-	// Convert char array to native String < IMPLEMENT IN YOUR CODE >
-	const char*			NativeStringToChar( const PYTHON_CPP_NATIVE_STRING& strIn );
+	// Convert int8_t array to native String < IMPLEMENT IN YOUR CODE >
+	const int8_t*			NativeStringToChar( const PYTHON_CPP_NATIVE_STRING& strIn );
 }
 
 // Uncomment if Strings Are unicode
 // #define PYTHON_CPP_USE_UNICODE_STRING
 
-// Uncomment if you need to delete the char* created in 'NativeStringToChar'
+// Uncomment if you need to delete the int8_t* created in 'NativeStringToint8_t'
 // #define PYTHON_CPP_NATIVE_STRING_CLEANUP
 
 // Maximum number of string arguments in a method
@@ -47,8 +47,8 @@ namespace PythonCpp
 #define PYTHON_CPP_MAX_METHOD_STRINGS 16
 */
 
-#include "../Tor/Base/String.h"
-#define PYTHON_CPP_NATIVE_STRING Tor::String
+#include "../Base/String.h"
+#define PYTHON_CPP_NATIVE_STRING Tyr::String
 
 namespace PythonCpp
 {
