@@ -10,8 +10,8 @@ So.. There are bugs.
 Althow planned to be multiplatform it is tested with:
 
 Architecture: 	64 bit
-Compiler: 	Microsoft Visual C++ Compiler Nov 2012 CTP (v120_CTP_Nov2012)
-Python: 	3.3.2 (Debug), 3.3 (Release)
+Compiler: 	Microsoft Visual C++ Compiler Nov 2013 CTP (v120_CTP_Nov2012)
+Python: 	3.3.5 (Debug), 3.3 (Release)
 
 Example of Usage:
 --------------------------
@@ -93,7 +93,22 @@ ADD_CLASS_TO_PYTHON( B )
 	EXPORT_METHOD_DESC( print, "Fucking awesome" );
 }
 
+// Will export regular types of Derived, including const
 ADD_CLASS_TO_PYTHON( Derived )
+{
+	SET_PARENT( B );
+	EXPORT_METHOD( child );
+}
+
+// Will export references types of Derived, including const &
+ADD_CLASS_REFERENCE_TO_PYTHON( Derived )
+{
+	SET_PARENT( B );
+	EXPORT_METHOD( child );
+}
+
+// Will export Derived*, including const
+ADD_CLASS_POINTER_TO_PYTHON( Derived )
 {
 	SET_PARENT( B );
 	EXPORT_METHOD( child );

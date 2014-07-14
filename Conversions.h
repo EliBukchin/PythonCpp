@@ -1,10 +1,11 @@
 /**          == Python Cpp ==
 	A library that reflects C++ classes to Python
-	Copyright 2012-2013, Eli Bukchin.                
+	Copyright 2012-2014, Eli Bukchin.                
 	
 	The program is distributed under the terms of the GNU General Public License
 	see LICENSE.txt
 */
+
 #pragma once
 #include "Instance.h"
 #include "Helpers.h"

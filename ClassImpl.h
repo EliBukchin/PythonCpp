@@ -1,10 +1,11 @@
 /**          == Python Cpp ==
 	A library that reflects C++ classes to Python
-	Copyright 2012-2013, Eli Bukchin.                
+	Copyright 2012-2014, Eli Bukchin.                
 	
 	The program is distributed under the terms of the GNU General Public License
 	see LICENSE.txt
 */
+
 template< class CppClass >
 template< int ID, typename Result, typename...Args>
 bool	PythonCpp::Class< CppClass >::AddMethod( const char* strName, const char* strDoc, Result( base_type<CppClass>::type::*method ) ( Args... ) )

@@ -192,19 +192,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ClassWrapper.h" />
+    <None Include="PythonCpp.licenseheader" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Class.h" />
+    <ClInclude Include="ClassImpl.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Conversions.h" />
-    <ClInclude Include="CppMethodWrapper.h" />
+    <ClInclude Include="Helpers.h" />
+    <ClInclude Include="Instance.h" />
+    <ClInclude Include="Method.h" />
+    <ClInclude Include="Module.h" />
     <ClInclude Include="NativeString.h" />
     <ClInclude Include="PythonCpp.h" />
-    <ClInclude Include="PythonModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Implementation.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="PythonCpp.licenseheader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
