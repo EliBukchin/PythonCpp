@@ -5,7 +5,6 @@
 	The program is distributed under the terms of the GNU General Public License
 	see LICENSE.txt
 */
-
 #pragma once
 // This is a configuration file For PythonCpp
 
